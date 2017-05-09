@@ -13,6 +13,7 @@ class Elevator {
     this.passengers  = [];
 
 }
+//console.log(`${2+2}`);
 
   start(){
     //var count=0;
@@ -27,11 +28,12 @@ class Elevator {
   stop() {
 
     clearInterval(this.interval);
+    this.interval=null;
 
   }
 
   update(){
-    
+
     if (this.destination !== undefined){
             if (this.direction === 'up'){
              this.floorUp();
@@ -43,9 +45,10 @@ class Elevator {
             this.log();
             _.remove(this.requests, (val) => {
               return val === this.floor;
-            });
-            this._passengersLeave();
-            this._passengersEnter();
+            }); //retira de las peticiones aquellas que ya se han cumplido (estamos
+                 //en el piso requerido)
+            this._passengersLeave(); //salen pasajeros
+            this._passengersEnter(); //entran pasajeros
 
             if (this.floor === this.destination){
                 this.destination = undefined;
@@ -59,33 +62,39 @@ class Elevator {
              else this.direction = 'down';
            }
     }
-
+   if (this.requests[0]===undefined&&this.waitingList[0]===undefined) this.stop();
   }
-  _passengersEnter() {
-    let waitingHere = _.remove(this.waitingList, (val) => {
-          return this.floor === val.originFloor;
-         });
 
-         let newFloors = _.map(waitingHere, (val) => {
+
+  _passengersEnter() {
+        let waitingHere = _.remove(this.waitingList, (val) => {
+          return this.floor === val.originFloor;
+        }); // donde se guardan pasajeros que estan en el piso actual y que
+        //estan esperando el ascensor
+
+        let newFloors = _.map(waitingHere, (val) => {
            return val.destinationFloor;
-         });
+         }); //averigua donde van esos pasajeros y lo guarda en array
+
          this.passengers = _.concat(this.passengers, waitingHere);
-         this.requests = _.union(this.requests, newFloors);
+         this.requests = _.concat(this.requests, newFloors); //union impedia nuevas
+                                                            //peticiones
+
          _.forEach(waitingHere, (val) => {
            console.log(val.name + " has entered the elevator.");
          });
-
   }
 
   _passengersLeave() {
 
     let personsLeaving = _.remove(this.passengers, (val) => {
            return this.floor === val.destinationFloor;
-         });
+         }); //pasajeros que se bajan en este piso
+
          _.forEach(personsLeaving, (val) => {
            console.log(val.name + " has left the elevator.");
          });
-       }
+  }
 
 
 
@@ -103,6 +112,9 @@ class Elevator {
   floorDown() {
     this.direction="down";
     if (this.floor>0){this.floor=this.floor-1;}
+    else {
+      this.floor=this.floor;
+    }
   }
 
   call(person) {
