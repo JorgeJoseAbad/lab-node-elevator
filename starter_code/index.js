@@ -2,17 +2,18 @@
 
 const Elevator = require('./elevator.js');
 const Person = require('./person.js');
-var _ = require('lodash');
+const _ = require('lodash');
 
-var elevator = new Elevator();
+let elevator = new Elevator();
 
-var persons= [
+let persons= [
   new Person ("Pedro", 3, 9),
   new Person("Andres",9, 5),
   new Person("perico", 2, 6),
   new Person("Silvia",7,1),
   new Person("Alfredo",2,10),
   new Person("Felipe",10,1),
+  new Person("Jose Luis",5,3)
 ];
 
 

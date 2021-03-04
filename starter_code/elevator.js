@@ -18,11 +18,10 @@ class Elevator {
   start(){
     //var count=0;
       this.interval=setInterval(()=>{
-      this.update();
-      console.log("paso intervalo");
+        this.update();
+        console.log("paso intervalo");
 
-    }, 1000);
-
+      }, 1000);
   }
 
   stop() {
@@ -62,10 +61,10 @@ class Elevator {
              else this.direction = 'down';
            }
     }
-   if (this.requests[0]===undefined&&this.waitingList[0]===undefined) this.stop();
+   if (this.requests[0] === undefined && this.waitingList[0] === undefined) this.stop();
   }
 
-
+  //_ señala "privado"
   _passengersEnter() {
         let waitingHere = _.remove(this.waitingList, (val) => {
           return this.floor === val.originFloor;
@@ -124,45 +123,9 @@ class Elevator {
       }
     }
 
-
-
-
-
   log() {
     console.log("Direction: "+this.direction+" | "+"Floor: "+this.floor);
   }
 
 }
 module.exports = Elevator;
-
-/*
-var elevator = new Elevator();
-
-elevator.start();
-elevator.log();
-elevator.floorUp();
-elevator.log();
-elevator.floorUp();
-elevator.floorUp();
-elevator.floorUp();
-elevator.floorUp();
-
-elevator.floorDown();
-elevator.floorDown();
-elevator.floorDown();
-elevator.floorDown();
-elevator.floorDown();
-elevator.floorDown();
-
-/*
-
-//elevator.update();
-//elevator.log();
-
-
-
-//log();
-
-
-//update();
-*/
